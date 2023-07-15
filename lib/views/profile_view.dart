@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_app/cubits/todos_cubit/todos_cubit.dart';
 import 'package:todo_app/cubits/users_data_cubit/users_data_cubit.dart';
 import 'package:todo_app/models/user_model.dart';
 import 'package:todo_app/utils/app_routes.dart';
 import 'package:todo_app/views/widgets/user_info_card.dart';
-
-import '../main.dart';
-import '../services/api_service.dart';
-import '../services/dep_inj_service.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});

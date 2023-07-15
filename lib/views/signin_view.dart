@@ -4,9 +4,6 @@ import 'package:todo_app/cubits/auth_cubit/auth_cubit.dart';
 import 'package:todo_app/cubits/change_password_icon_cubit/change_password_icon_cubit.dart';
 import 'package:todo_app/utils/app_styles.dart';
 import 'package:todo_app/views/widgets/custom_text_field.dart';
-
-import '../services/api_service.dart';
-import '../services/dep_inj_service.dart';
 import '../utils/app_routes.dart';
 import 'widgets/custom_button.dart';
 import 'widgets/custom_password_text_field.dart';

@@ -3,13 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/cubits/change_password_icon_cubit/change_password_icon_cubit.dart';
 import 'package:todo_app/cubits/users_data_cubit/users_data_cubit.dart';
 import 'package:todo_app/main.dart';
-import 'package:todo_app/services/api_service.dart';
-import 'package:todo_app/services/dep_inj_service.dart';
 import 'package:todo_app/views/widgets/custom_button.dart';
 import 'package:todo_app/views/widgets/custom_password_text_field.dart';
 import 'package:todo_app/views/widgets/custom_text_field.dart';
 
-import '../models/user_model.dart';
 
 class EditUserInfoView extends StatefulWidget {
   const EditUserInfoView({super.key});

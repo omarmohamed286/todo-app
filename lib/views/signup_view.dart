@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/cubits/auth_cubit/auth_cubit.dart';
 import 'package:todo_app/cubits/change_password_icon_cubit/change_password_icon_cubit.dart';
-import 'package:todo_app/services/api_service.dart';
-import 'package:todo_app/services/dep_inj_service.dart';
 import 'package:todo_app/utils/app_routes.dart';
 import 'package:todo_app/utils/app_styles.dart';
 import 'package:todo_app/views/widgets/custom_text_field.dart';

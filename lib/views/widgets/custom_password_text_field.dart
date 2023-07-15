@@ -25,6 +25,7 @@ class CustomPasswordTextFormField extends StatelessWidget {
             if (value?.isEmpty ?? true) {
               return '$labelText cannot be null';
             }
+            return null;
           },
           onSaved: onSaved,
           onChanged: onChanged,

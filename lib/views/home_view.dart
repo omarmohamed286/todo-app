@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/cubits/todos_cubit/todos_cubit.dart';
 import 'package:todo_app/main.dart';
 import 'package:todo_app/models/todo_model.dart';
-import 'package:todo_app/services/cache_service.dart';
-import 'package:todo_app/services/dep_inj_service.dart';
 import 'package:todo_app/utils/app_routes.dart';
 import 'package:todo_app/views/widgets/bottom_sheet_body.dart';
 import 'package:todo_app/views/widgets/todo_container.dart';
