@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/cubits/todos_cubit/todos_cubit.dart';
+import 'package:todo_app/main.dart';
 import 'package:todo_app/models/todo_model.dart';
 import 'package:todo_app/services/cache_service.dart';
 import 'package:todo_app/services/dep_inj_service.dart';
 import 'package:todo_app/utils/app_routes.dart';
 import 'package:todo_app/views/widgets/bottom_sheet_body.dart';
-import 'package:todo_app/views/widgets/custom_button.dart';
-import 'package:todo_app/views/widgets/custom_text_field.dart';
 import 'package:todo_app/views/widgets/todo_container.dart';
+
+import 'widgets/custom_drawer.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -20,19 +21,13 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   List<TodoModel>? todos = [];
   String? title;
-  String? userToken;
 
   @override
   void initState() {
-    getTodos();
+    getUserToken().then((value) {
+      BlocProvider.of<TodosCubit>(context).getTodos(token: token!);
+    });
     super.initState();
-  }
-
-  Future<void> getTodos() async {
-    userToken = await getIt<CacheService>().getData(key: 'token');
-    if (context.mounted) {
-      BlocProvider.of<TodosCubit>(context).getTodos(token: userToken!);
-    }
   }
 
   @override
@@ -42,10 +37,10 @@ class _HomeViewState extends State<HomeView> {
         if (state is GetTodosSuccess) {
           todos = BlocProvider.of<TodosCubit>(context).todos;
         } else if (state is AddTodoSuccess) {
-          BlocProvider.of<TodosCubit>(context).getTodos(token: userToken!);
+          BlocProvider.of<TodosCubit>(context).getTodos(token: token!);
           Navigator.pop(context);
         } else if (state is DeleteTodoSuccess) {
-          BlocProvider.of<TodosCubit>(context).getTodos(token: userToken!);
+          BlocProvider.of<TodosCubit>(context).getTodos(token: token!);
         }
       },
       builder: (context, state) {
@@ -66,7 +61,7 @@ class _HomeViewState extends State<HomeView> {
                         onPressed: () {
                           if (title != null) {
                             BlocProvider.of<TodosCubit>(context)
-                                .addTodo(token: userToken!, title: title!);
+                                .addTodo(token: token!, title: title!);
                           }
                         },
                       ),
@@ -78,8 +73,8 @@ class _HomeViewState extends State<HomeView> {
             appBar: AppBar(
               title: const Text('Todos'),
               centerTitle: true,
-              automaticallyImplyLeading: false,
             ),
+            drawer: const CustomDrawer(),
             body: state is GetTodosLoading
                 ? const Center(child: CircularProgressIndicator())
                 : ListView.builder(
@@ -89,14 +84,11 @@ class _HomeViewState extends State<HomeView> {
                         toDoTitle: todos![index].title,
                         onRemoveIconPressed: () {
                           BlocProvider.of<TodosCubit>(context).deleteTodo(
-                              token: userToken!, todoId: todos![index].id);
+                              token: token!, todoId: todos![index].id);
                         },
                         onTap: () {
                           Navigator.pushNamed(context, AppRoutes.kEditTodoView,
-                              arguments: {
-                                'todo': todos![index],
-                                'userToken': userToken!
-                              });
+                              arguments: todos![index]);
                         },
                       );
                     },

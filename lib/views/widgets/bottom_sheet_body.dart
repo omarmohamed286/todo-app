@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'custom_button.dart';
 import 'custom_text_field.dart';
 
@@ -19,7 +18,7 @@ class BottomSheetBody extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CustomTextField(
-              labelText: 'title',
+              labelText: 'Title',
               textInputAction: TextInputAction.done,
               onChanged: onChanged,
             ),
@@ -34,6 +33,5 @@ class BottomSheetBody extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }

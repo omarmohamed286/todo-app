@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/cubits/todos_cubit/todos_cubit.dart';
+import 'package:todo_app/main.dart';
+import 'package:todo_app/models/todo_model.dart';
 import 'package:todo_app/views/widgets/custom_button.dart';
 import 'package:todo_app/views/widgets/custom_text_field.dart';
 
@@ -16,8 +18,8 @@ class _EditTodoViewState extends State<EditTodoView> {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> arguments =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    TodoModel todo =
+        ModalRoute.of(context)!.settings.arguments as TodoModel;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Todo'),
@@ -32,7 +34,7 @@ class _EditTodoViewState extends State<EditTodoView> {
             CustomTextField(
               labelText: 'Edit',
               textInputAction: TextInputAction.done,
-              initialValue: arguments['todo'].title,
+              initialValue: todo.title,
               onChanged: (value) {
                 newTitle = value;
               },
@@ -44,7 +46,7 @@ class _EditTodoViewState extends State<EditTodoView> {
               listener: (context, state) {
                 if (state is EditTodoSuccess) {
                   BlocProvider.of<TodosCubit>(context)
-                      .getTodos(token: arguments['userToken']);
+                      .getTodos(token: token!);
                   Navigator.pop(context);
                 }
               },
@@ -56,8 +58,8 @@ class _EditTodoViewState extends State<EditTodoView> {
                         onPressed: () {
                           if (newTitle != null) {
                             BlocProvider.of<TodosCubit>(context).editTodo(
-                                token: arguments['userToken'],
-                                todoId: arguments['todo'].id,
+                                token: token!,
+                                todoId: todo.id,
                                 newTitle: newTitle!);
                           }
                         },

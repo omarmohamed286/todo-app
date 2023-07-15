@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:todo_app/models/todo_model.dart';
+import 'package:todo_app/models/user_model.dart';
 import 'package:todo_app/services/api_service.dart';
 
 part 'todos_state.dart';
@@ -19,7 +20,6 @@ class TodosCubit extends Cubit<TodosState> {
       emit(AddTodoSuccess());
     } catch (e) {
       print(e.toString());
-
       emit(AddTodoFailure(e.toString()));
     }
   }

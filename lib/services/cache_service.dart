@@ -10,4 +10,8 @@ class CacheService {
   Future getData({required String key}) async {
     return await storage.read(key: key);
   }
+
+  Future<void> deleteData({required String key}) async {
+    await storage.delete(key: key);
+  }
 }

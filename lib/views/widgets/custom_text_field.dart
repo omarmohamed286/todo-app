@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import '../../utils/custom_border.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField(
-      {super.key,
-      required this.labelText,
-      this.onSaved,
-      this.textInputAction = TextInputAction.next,
-      this.onChanged,
-      this.initialValue});
+  const CustomTextField({
+    super.key,
+    required this.labelText,
+    this.onSaved,
+    this.textInputAction = TextInputAction.next,
+    this.onChanged,
+    this.initialValue,
+  });
 
   final String labelText;
   final void Function(String?)? onSaved;

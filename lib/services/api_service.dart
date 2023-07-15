@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:todo_app/models/todo_model.dart';
+import 'package:todo_app/models/user_model.dart';
 import 'package:todo_app/services/cache_service.dart';
 import 'package:todo_app/services/dep_inj_service.dart';
 
@@ -40,6 +41,35 @@ class ApiService {
     print('The api response is $response');
     await getIt<CacheService>()
         .saveData(key: 'token', value: response.data['token']);
+  }
+
+  Future<UserModel?> getUser({required String token}) async {
+    final response = await dio.get(
+      '$baseUrl/users',
+      options: Options(
+        headers: {
+          "Authorization": token,
+        },
+      ),
+    );
+    print('The api response is $response');
+    return UserModel.fromJson(response.data);
+  }
+
+  Future<void> updateUser(
+      {required String token,
+      required String field,
+      required String newValue}) async {
+    final response = await dio.patch(
+      '$baseUrl/users',
+      data: {field: newValue},
+      options: Options(
+        headers: {
+          "Authorization": token,
+        },
+      ),
+    );
+    print('The api response is $response');
   }
 
   Future<void> addTodo({required String token, required String title}) async {

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/cubits/todos_cubit/todos_cubit.dart';
+import 'package:todo_app/cubits/users_data_cubit/users_data_cubit.dart';
 import 'package:todo_app/services/cache_service.dart';
 import 'package:todo_app/utils/app_routes.dart';
 
 import 'services/api_service.dart';
 import 'services/dep_inj_service.dart';
 
-String? token;
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
-  token = await getIt<CacheService>().getData(key: 'token');
+  getUserToken();
   runApp(const TodoApp());
 }
 
@@ -21,8 +20,16 @@ class TodoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TodosCubit(getIt<ApiService>()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => TodosCubit(getIt<ApiService>()),
+        ),
+        BlocProvider(
+          create: (context) => UsersDataCubit(getIt<ApiService>())
+            ..getCurrentUser(token: token!),
+        ),
+      ],
       child: MaterialApp(
         initialRoute: token?.isEmpty ?? true
             ? AppRoutes.kSignupView
@@ -31,4 +38,9 @@ class TodoApp extends StatelessWidget {
       ),
     );
   }
+}
+
+String? token;
+Future<void> getUserToken() async {
+  token = await getIt<CacheService>().getData(key: 'token');
 }
